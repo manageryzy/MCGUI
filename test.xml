@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Node height="100px" width="100px" background="#FFFFFFFF" left="100px" top="100px">
+    <Node height="10%" width="20px" background="#FF0000FF" left="10%" bottom = "20%">
+    </Node>
+</Node>
