@@ -131,6 +131,8 @@ public abstract class DOM implements IDraw{
 		case "background-pictur":
 			this.BackgroundPic = Value;
 			break;
+		case "align":
+			break;
 		default:
 			Logger.Log("Unkown attr " + Name + "will be ignored");
 		}

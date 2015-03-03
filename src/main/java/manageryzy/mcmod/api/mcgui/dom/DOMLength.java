@@ -50,6 +50,7 @@ public class DOMLength {
 					else if (ch == '%')
 					{
 						status = Status.READY;
+						node.unit = Unit.percent;
 						//node.NumStr = Integer.parseInt(node.NumStr);
 					}
 					else throw new Throwable("unexpected input! expected px or %");

@@ -75,6 +75,8 @@ public class Debugger extends Frame {
 			
 			@Override
 			public void componentResized(ComponentEvent e) {
+				McGui.WindowHeight = This.getHeight();
+				McGui.WindowWidth = This.getWidth();
 				if(WindowDom!=null)
 					WindowDom.OnResize(null);
 			}

@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<LinearLayoutHorizontal height="100px" width="100px" background="#00FFFFFF" left="50px" top="100px">
-    <LinearLayoutVertical height="10%" width="20px" background="#FFFF0040">
-        <RelativeLayout height="10%" width="20px" background="#FFFF0040"></RelativeLayout>
-        <RelativeLayout height="10%" width="20px" background="#FFFF0040"></RelativeLayout>
+<LinearLayoutHorizontal height="100px" width="100px" background="#00FFFFFF" left="50px" top="100px"  align="center">
+    <LinearLayoutVertical height="30px" width="40px" background="#FFFF0070">
+        <RelativeLayout height="10%" width="20px" background="#FFFF0070"></RelativeLayout>
+        <RelativeLayout height="10%" width="20px" background="#FFFF0070"></RelativeLayout>
+        <RelativeLayout height="10%" width="20px" background="#FFFF0070"></RelativeLayout>
     </LinearLayoutVertical>
-    <RelativeLayout height="10%" width="20px" background="#FFFF0040"></RelativeLayout>
-    <RelativeLayout height="10%" width="20px" background="#FFFF0040"></RelativeLayout>
+    <RelativeLayout height="10%" width="20px" background="#FFFF0070"></RelativeLayout>
+    <RelativeLayout height="10%" width="20px" background="#FFFF0070"></RelativeLayout>
 </LinearLayoutHorizontal>

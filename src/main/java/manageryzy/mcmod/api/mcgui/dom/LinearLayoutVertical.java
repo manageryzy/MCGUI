@@ -122,16 +122,27 @@ public abstract class LinearLayoutVertical extends DOM{
 			}
 		}
 		
+		
+		
 		if(this.Father!=null)return Father.ClacChildPos(BasePoint,this);
 		
 		return BasePoint;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public Point ClacChildPos(Point BasePoint, DOM child) {
 		if(child.getFather()!=this)
 			return BasePoint;
+		
+		if(this.attr.get("align")!=null)
+		{
+			switch(this.attr.get("align"))
+			{
+			case "center":
+				child.top = this.top + this.height/2 - child.height/2;
+				break;
+			}
+		}
 		
 		return new Point(BasePoint.x1, BasePoint.y1 + child.height ,BasePoint.x2,BasePoint.y2 - child.height);
 	}

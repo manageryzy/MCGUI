@@ -120,17 +120,28 @@ public abstract class LinearLayoutHorizontal extends DOM {
 			}
 		}
 		
+		
+		
 		if(this.Father!=null)return Father.ClacChildPos(BasePoint,this);
 		
 		return BasePoint;
 		
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public Point ClacChildPos(Point BasePoint, DOM child) {
 		if(child.getFather()!=this)
 			return BasePoint;
+		
+		if(this.attr.get("align")!=null)
+		{
+			switch(this.attr.get("align"))
+			{
+			case "center":
+				child.left = this.left + this.width/2 - child.width/2;
+				break;
+			}
+		}
 		
 		return new Point(BasePoint.x1 + child.width, BasePoint.y1 ,BasePoint.x2 - child.width,BasePoint.y2);
 	}
