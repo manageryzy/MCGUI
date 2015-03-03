@@ -4,16 +4,15 @@ import manageryzy.mcmod.api.mcgui.McGui;
 import manageryzy.mcmod.api.mcgui.logger.Logger;
 
 
-public abstract class RelativeLayout extends DOM {
-	
-	public RelativeLayout() {
-		this.DOMType = "RelativeLayout";
+public abstract class LinearLayoutHorizontal extends DOM {
+
+	public LinearLayoutHorizontal() {
+		this.DOMType = "LinearLayoutHorizontal";
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
 	Point ReSize(Point BasePoint) {
-
 		//Calc height
 		int minHeight = 0;
 		int maxHeight = inf;
@@ -50,8 +49,6 @@ public abstract class RelativeLayout extends DOM {
 			}
 		}
 		
-		
-		
 		//Calc width
 		int minWidth = 0;
 		int maxWidth = inf;
@@ -77,17 +74,14 @@ public abstract class RelativeLayout extends DOM {
 			}
 		}
 		
-		this.left = 0;
-		this.top = 0;
+		this.left = BasePoint.x1;
+		this.top = BasePoint.y1;
 		
 		if(this.Father!=null)
 		{
 			this.left += this.Father.getLeftCalc();
 			this.top += this.Father.getTopCalc();
 		}
-		
-		this.left += BasePoint.x1;
-		this.top += BasePoint.y1;
 		
 		if(this.Left !=null)
 		{
@@ -129,6 +123,16 @@ public abstract class RelativeLayout extends DOM {
 		if(this.Father!=null)return Father.ClacChildPos(BasePoint,this);
 		
 		return BasePoint;
+		
 	}
 	
+	@SuppressWarnings("deprecation")
+	@Override
+	public Point ClacChildPos(Point BasePoint, DOM child) {
+		if(child.getFather()!=this)
+			return BasePoint;
+		
+		return new Point(BasePoint.x1 + child.width, BasePoint.y1 ,BasePoint.x2 - child.width,BasePoint.y2);
+	}
+
 }

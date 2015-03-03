@@ -21,6 +21,8 @@ public abstract class DOM implements IDraw{
 	
 	protected Map<String,String> attr = null;
 	
+	String DOMType = "DOM"; 
+	
 	/**
 	 * these are the basic 
 	 */
@@ -178,16 +180,25 @@ public abstract class DOM implements IDraw{
 		
 		if(BasePoint == null)
 		{
-			BasePoint = new Point(0, 0, this.parentWidth, this.parentHeight);
+			BasePoint = new Point(0, 0, McGui.WindowWidth, McGui.WindowHeight);
 		}
-		res = t = this.ReSize(BasePoint);
+		res = this.ReSize(BasePoint);
+		
+		t = BasePoint;
 		
 		for(DOM element : this.childElement)
 		{
 			t = element.OnResize(t);
 		}
 		
+		Logger.Log("element " + DOMType + " : x= " + this.left + " y= " + this.top + " w= " + this.width + " h= " + this.height );
+		
 		return res; 
+	}
+	
+	public Point ClacChildPos(Point BasePoint,DOM child)
+	{
+		return BasePoint;
 	}
 	
 	/**
@@ -369,6 +380,16 @@ public abstract class DOM implements IDraw{
 	public void setWidthCalc(int width)
 	{
 		this.width = width;
+	}
+	
+	@Deprecated
+	public void setTopCalc(int top) {
+		this.top = top;
+	}
+	
+	@Deprecated
+	public void setLeftCalc(int left) {
+		this.left = left;
 	}
 	
 	public class Point{
