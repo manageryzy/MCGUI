@@ -3,6 +3,7 @@ package manageryzy.mcmod.api.mcgui.dom;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import manageryzy.mcmod.api.mcgui.McGui;
@@ -19,7 +20,10 @@ public abstract class DOM implements IDraw{
 	protected ArrayList<DOM> childElement;
 	protected DOM Father = null;
 	
+	protected DOM focus = null;
+	
 	protected Map<String,String> attr = null;
+	protected Map<String,List<IDOMMessageHandler>> eventMap;//map of event listener
 	
 	String DOMType = "DOM"; 
 	
@@ -52,6 +56,8 @@ public abstract class DOM implements IDraw{
 	
 	String BackgroundPic;//if backgound picture is not null the backgroud color will be ignored
 	
+	
+	
 	public DOM() {
 		childElement = new ArrayList<DOM>();
 		attr = new HashMap<String, String>();
@@ -59,6 +65,7 @@ public abstract class DOM implements IDraw{
 		BackgroundColor = new DOMColor(255, 255, 255, 100);
 		BackgroundPic = "";
 		
+		eventMap = new HashMap<String, List<IDOMMessageHandler>>();
 	}
 	
 	/**
@@ -131,13 +138,77 @@ public abstract class DOM implements IDraw{
 		case "background-pictur":
 			this.BackgroundPic = Value;
 			break;
+			
 		case "align":
 			break;
+			
 		default:
 			Logger.Log("Unkown attr " + Name + "will be ignored");
 		}
 		
 		this.attr.put(Name, Value);
+	}
+	
+	/**
+	 * add a listener to the node
+	 * @param event
+	 * @param listener
+	 */
+	public void addEventListener(String event,IDOMMessageHandler listener)
+	{
+		if(this.eventMap.get(event) == null)
+		{
+			this.eventMap.put(event, new ArrayList<IDOMMessageHandler>());
+		}
+		
+		this.eventMap.get(event).add(listener);
+	}
+	
+	protected boolean preEvent(DOMMessage msg)
+	{
+		boolean res = true;
+		if(msg.isGlobalMessage())
+		{
+			if(!this.childElement.isEmpty())
+			{
+				for(DOM d:this.childElement)
+				{
+					d.preEvent(msg);
+				}
+			}
+		}
+		else
+		{
+			if(this.focus!=null)
+			{
+				this.focus.preEvent(msg);
+			}
+			else
+			{
+				if(this.childElement.isEmpty())
+				{
+					//TODO:
+				}
+			}
+		}
+		
+		return res;
+	}
+	
+	/**
+	 * call every listener.
+	 * @return false if do not do not call father
+	 */
+	protected boolean doEvent(DOMMessage msg)
+	{
+		boolean res = true;
+		
+		for(IDOMMessageHandler handler : this.eventMap.get(msg.getMessageType()))
+		{
+			res = res && handler.onMessage(msg, this);
+		}
+		
+		return res;
 	}
 	
 	/**
@@ -394,6 +465,15 @@ public abstract class DOM implements IDraw{
 		this.left = left;
 	}
 	
+	public void setFocus(DOM focus) {
+		if(this.childElement.contains(focus))
+			this.focus = focus;
+	}
+	
+	public DOM getFocus() {
+		return focus;
+	}
+	
 	public class Point{
 		public int x1,y1,x2,y2;
 		public Point(int x1,int y1,int x2,int y2) {
@@ -403,5 +483,6 @@ public abstract class DOM implements IDraw{
 			this.y2 = y2;
 		}
 	}
+
 	
 }
