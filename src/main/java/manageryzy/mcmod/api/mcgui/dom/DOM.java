@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import manageryzy.mcmod.api.mcgui.McGui;
+import manageryzy.mcmod.api.mcgui.dom.messages.DOMMessage;
 import manageryzy.mcmod.api.mcgui.draw.IDraw;
 import manageryzy.mcmod.api.mcgui.logger.Logger;
 
@@ -164,6 +165,14 @@ public abstract class DOM implements IDraw{
 		this.eventMap.get(event).add(listener);
 	}
 	
+	public void postMessage(DOMMessage msg)
+	{
+		if(this.Father!=null)
+			return;
+		
+		this.preEvent(msg);
+	}
+	
 	protected boolean preEvent(DOMMessage msg)
 	{
 		boolean res = true;
@@ -173,21 +182,33 @@ public abstract class DOM implements IDraw{
 			{
 				for(DOM d:this.childElement)
 				{
-					d.preEvent(msg);
+					res = res && d.preEvent(msg);
 				}
+			}
+			else
+			{
+				return this.doEvent(msg);
+			}
+			
+			if(res)
+			{
+				this.doEvent(msg);
 			}
 		}
 		else
 		{
 			if(this.focus!=null)
 			{
-				this.focus.preEvent(msg);
+				if(this.focus.preEvent(msg))
+				{
+					res = res && this.doEvent(msg);
+				}
 			}
 			else
 			{
 				if(this.childElement.isEmpty())
 				{
-					//TODO:
+					res = res && this.doEvent(msg);
 				}
 			}
 		}

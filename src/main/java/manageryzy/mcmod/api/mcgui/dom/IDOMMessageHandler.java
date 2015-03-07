@@ -1,5 +1,7 @@
 package manageryzy.mcmod.api.mcgui.dom;
 
+import manageryzy.mcmod.api.mcgui.dom.messages.DOMMessage;
+
 public interface IDOMMessageHandler {
 	/**
 	 * called when the message or event fired
