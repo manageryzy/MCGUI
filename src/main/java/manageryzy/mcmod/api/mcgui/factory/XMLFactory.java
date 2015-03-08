@@ -31,8 +31,7 @@ public abstract class XMLFactory {
 		String XML = "";
 		String str;
 		
-		FileInputStream in = new FileInputStream(file);  
-        // 指定读取文件时以UTF-8的格式读取 
+		FileInputStream in = new FileInputStream(file);   
 		
         BufferedReader br = new BufferedReader(new UnicodeReader(in, Charset.defaultCharset().name()));
         while ((str = br.readLine()) != null) {
@@ -63,6 +62,11 @@ public abstract class XMLFactory {
 	private DOM GenerateDOMTree(Node e,DOM father) throws DOMException, Throwable
 	{
 		DOM d = GenerateDOM(e.getNodeName());
+		
+		if(e.getNodeName().equals("#text"))
+		{
+			d.addAttr("text", e.getTextContent());
+		}
 		
 		NamedNodeMap attrs = e.getAttributes();
 		

@@ -141,6 +141,7 @@ public abstract class DOM implements IDraw{
 			break;
 			
 		case "align":
+		case "text":
 			break;
 			
 		default:
@@ -224,10 +225,14 @@ public abstract class DOM implements IDraw{
 	{
 		boolean res = true;
 		
-		for(IDOMMessageHandler handler : this.eventMap.get(msg.getMessageType()))
+		if(this.eventMap.get(msg.getMessageType())!=null)
 		{
-			res = res && handler.onMessage(msg, this);
+			for(IDOMMessageHandler handler : this.eventMap.get(msg.getMessageType()))
+			{
+				res = res && handler.onMessage(msg, this);
+			}
 		}
+			
 		
 		return res;
 	}

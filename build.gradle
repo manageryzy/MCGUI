@@ -13,7 +13,11 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
+    
+    
 }
+
+
 
 apply plugin: 'forge'
 
@@ -21,10 +25,25 @@ version = "0.1"
 group= "manageryzy.mcmod.api.mcgui" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MCGUI"
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+compileJava.options.encoding = "UTF-8"
+
+tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+
+jar{
+    manifest {
+        attributes 'Main-Class': 'manageryzy.mcmod.api.mcgui.McGui'
+    }
+    
+}
+
+
 minecraft {
     version = "1.8-11.14.0.1285-1.8"
     //1.7.2-10.12.2.1147 1.7.10-10.13.2.1232 1.8-11.14.0.1285-1.8
-    assetDir = "eclipse/assets"
+    runDir = "eclipse/assets"
 }
 processResources
 {
@@ -36,6 +55,15 @@ processResources
         
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
+    }
+    
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+    manifest {
+        attributes 'Main-Class': 'manageryzy.mcmod.api.mcgui.McGui'
     }
 }
 
